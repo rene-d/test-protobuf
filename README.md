@@ -9,4 +9,4 @@ In this example, it works with [protobuf](https://github.com/protocolbuffers/pro
 [CMake](http://cmake.org) ready-to-use modules to add protobuf and protobuf-c to your projects.
 
 ## TODO 
-Add cross compilation to the protobuf cmake module.
+Add cross compilation to the CMake module.
