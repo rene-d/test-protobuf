@@ -8,10 +8,10 @@ int main()
 {
     srand(time(NULL));
 
-    // ---- bar
+    // ---- foo
     Foo *foo = (Foo *)calloc(1, sizeof(Foo));
     foo__init(foo);
-    foo->taille = rand() % 10000;
+    foo->seed = rand() % 10000;
     foo->n_bar = 2;
     foo->bar = (Foo__Bar **)calloc(foo->n_bar, sizeof(Foo__Bar *));
 
@@ -52,5 +52,20 @@ int main()
     fwrite(buf, len, 1, f);
     fclose(f);
 
-    // don't care about freeing memory
+    // take about the memory
+    for (int i = 0; i < foo->n_bar; ++i)
+    {
+        Foo__Bar *bar = foo->bar[i];
+        free(bar->name);
+        for (int j = 0; j < bar->n_beer; ++j)
+        {
+            Foo__Bar__Beer *beer = bar->beer[j];
+            free(beer->a);
+            free(beer);
+        }
+        free(bar);
+    }
+    free(foo);
+
+    return 0;
 }

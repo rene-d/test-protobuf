@@ -20,6 +20,9 @@ target_link_libraries(foo-lib PUBLIC protobufc::libprotobuf-c)
 add_executable(main main.c)
 target_link_libraries(main foo-lib)
 
+add_executable(alea alea.c)
+target_link_libraries(alea foo-lib)
+
 enable_testing()
 
 add_test(NAME main
