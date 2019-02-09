@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+message Foo {
+    required int32 taille = 1;
+    message Bar {
+        required string name = 1;
+        required int32 value = 2;
+    	message Beer {
+            required string a = 1;
+            required int32 b = 2;
+    	}
+        repeated Beer beer = 3;
+    }
+    repeated Bar bar = 2;
+}
