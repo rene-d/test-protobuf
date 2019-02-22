@@ -24,44 +24,44 @@ ExternalProject_Add(
 
 add_dependencies(protobuf-c-external protobuf-external)
 
+
 set(ProtobufC_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/externals/include)
 set(ProtobufC_LIBRARY ${CMAKE_CURRENT_BINARY_DIR}/externals/lib/libprotobuf-c.a)
 
-
 #
-#
-find_program(ProtobufC_PROTOC-C_EXECUTABLE
-    NAMES protoc-c
-    DOC "The Google Protocol Buffers Compiler C"
-    PATHS
-    ${CMAKE_CURRENT_BINARY_DIR}/externals/bin
-)
+# find_program(ProtobufC_PROTOC-C_EXECUTABLE
+#     NAMES protoc-c
+#     DOC "The Google Protocol Buffers Compiler C"
+#     PATHS
+#     ${CMAKE_CURRENT_BINARY_DIR}/externals/bin
+# )
+set(ProtobufC_PROTOC-C_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/externals/bin/protoc-c)
 mark_as_advanced(ProtobufC_PROTOC-C_EXECUTABLE)
 
 
 #
 #
 if(NOT TARGET protobufc::libprotobuf-c)
+    file(MAKE_DIRECTORY ${ProtobufC_INCLUDE_DIR})
+
     add_library(protobufc::libprotobuf-c UNKNOWN IMPORTED)
     set_target_properties(protobufc::libprotobuf-c PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES "${ProtobufC_INCLUDE_DIR}")
-    if(EXISTS "${ProtobufC_LIBRARY}")
-        set_target_properties(protobufc::libprotobuf-c PROPERTIES
+    set_target_properties(protobufc::libprotobuf-c PROPERTIES
         IMPORTED_LOCATION "${ProtobufC_LIBRARY}")
-    endif()
-    if(EXISTS "${ProtobufC_LIBRARY_RELEASE}")
-        set_property(TARGET protobufc::libprotobuf-c APPEND PROPERTY
+    set_property(TARGET protobufc::libprotobuf-c APPEND PROPERTY
         IMPORTED_CONFIGURATIONS RELEASE)
-        set_target_properties(protobufc::libprotobuf-c PROPERTIES
+    set_target_properties(protobufc::libprotobuf-c PROPERTIES
         IMPORTED_LOCATION_RELEASE "${ProtobufC_LIBRARY_RELEASE}")
-    endif()
-    if(EXISTS "${ProtobufC_LIBRARY_DEBUG}")
-        set_property(TARGET protobufc::libprotobuf-c APPEND PROPERTY
+    set_property(TARGET protobufc::libprotobuf-c APPEND PROPERTY
         IMPORTED_CONFIGURATIONS DEBUG)
-        set_target_properties(protobufc::libprotobuf-c PROPERTIES
+    set_target_properties(protobufc::libprotobuf-c PROPERTIES
         IMPORTED_LOCATION_DEBUG "${ProtobufC_LIBRARY_DEBUG}")
-    endif()
+
 endif()
+
+
+add_dependencies(protobufc::libprotobuf-c protobuf-c-external)
 
 
 #
