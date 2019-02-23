@@ -10,8 +10,10 @@ include(ExternalProject)
 
 include(protobuf.cmake)
 include(protobuf-c.cmake)
+include(zeromq.cmake)
 
 enable_testing()
+
 
 # C bindings
 #
@@ -19,7 +21,7 @@ protobufc_generate_c(PROTO_SRC PROTO_HEAD foo.proto)
 
 add_library(foo-lib STATIC ${PROTO_SRC} ${PROTO_HEAD})
 target_include_directories(foo-lib INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/src_gen)
-target_link_libraries(foo-lib PUBLIC protobufc::libprotobuf-c)
+target_link_libraries(foo-lib PUBLIC protobuf-c::libprotobuf-c)
 
 add_executable(main main.c)
 target_link_libraries(main foo-lib)
@@ -41,3 +43,12 @@ target_link_libraries(foo-cpp-lib PUBLIC ${Protobuf_LIBRARY})
 
 add_executable(mainxx mainxx.cpp)
 target_link_libraries(mainxx foo-cpp-lib)
+
+
+# zeromq
+#
+add_executable(zmq_sub zmq_sub.cpp)
+target_link_libraries(zmq_sub zeromq::libzmq)
+
+add_executable(zmq_pub zmq_pub.cpp)
+target_link_libraries(zmq_pub zeromq::libzmq)

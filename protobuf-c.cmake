@@ -38,27 +38,27 @@ mark_as_advanced(ProtobufC_PROTOC-C_EXECUTABLE)
 
 #
 #
-if(NOT TARGET protobufc::libprotobuf-c)
+if(NOT TARGET protobuf-c::libprotobuf-c)
     file(MAKE_DIRECTORY ${ProtobufC_INCLUDE_DIR})
 
-    add_library(protobufc::libprotobuf-c UNKNOWN IMPORTED)
-    set_target_properties(protobufc::libprotobuf-c PROPERTIES
+    add_library(protobuf-c::libprotobuf-c UNKNOWN IMPORTED)
+    set_target_properties(protobuf-c::libprotobuf-c PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES "${ProtobufC_INCLUDE_DIR}")
-    set_target_properties(protobufc::libprotobuf-c PROPERTIES
+    set_target_properties(protobuf-c::libprotobuf-c PROPERTIES
         IMPORTED_LOCATION "${ProtobufC_LIBRARY}")
-    set_property(TARGET protobufc::libprotobuf-c APPEND PROPERTY
+    set_property(TARGET protobuf-c::libprotobuf-c APPEND PROPERTY
         IMPORTED_CONFIGURATIONS RELEASE)
-    set_target_properties(protobufc::libprotobuf-c PROPERTIES
+    set_target_properties(protobuf-c::libprotobuf-c PROPERTIES
         IMPORTED_LOCATION_RELEASE "${ProtobufC_LIBRARY_RELEASE}")
-    set_property(TARGET protobufc::libprotobuf-c APPEND PROPERTY
+    set_property(TARGET protobuf-c::libprotobuf-c APPEND PROPERTY
         IMPORTED_CONFIGURATIONS DEBUG)
-    set_target_properties(protobufc::libprotobuf-c PROPERTIES
+    set_target_properties(protobuf-c::libprotobuf-c PROPERTIES
         IMPORTED_LOCATION_DEBUG "${ProtobufC_LIBRARY_DEBUG}")
 
 endif()
 
 
-add_dependencies(protobufc::libprotobuf-c protobuf-c-external)
+add_dependencies(protobuf-c::libprotobuf-c protobuf-c-external)
 
 
 #
