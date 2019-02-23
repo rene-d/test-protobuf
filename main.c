@@ -11,7 +11,8 @@ int main()
     // ---- foo
     Foo *foo = (Foo *)calloc(1, sizeof(Foo));
     foo__init(foo);
-    foo->seed = rand() % 10000;
+    // foo->seed = rand() % 10000;
+    foo->seed = 0xbabe;
     foo->n_bar = 2;
     foo->bar = (Foo__Bar **)calloc(foo->n_bar, sizeof(Foo__Bar *));
 
@@ -52,7 +53,7 @@ int main()
     fwrite(buf, len, 1, f);
     fclose(f);
 
-    // take about the memory
+    // take care of the memory
     for (int i = 0; i < foo->n_bar; ++i)
     {
         Foo__Bar *bar = foo->bar[i];

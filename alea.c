@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     fwrite(buf, len, 1, f);
     fclose(f);
 
-    // take about the memory
+    // take care of the memory
     for (int i = 0; i < foo->n_bar; ++i)
     {
         Foo__Bar *bar = foo->bar[i];
