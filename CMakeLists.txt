@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.9)
 
-set(CMAKE_C_COMPILER gcc-8)
-set(CMAKE_CXX_COMPILER g++-8)
-set(CMAKE_CXX_VERSION 11)
+# set(CMAKE_C_COMPILER gcc-8)
+# set(CMAKE_CXX_COMPILER g++-8)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 
 include(ExternalProject)
 

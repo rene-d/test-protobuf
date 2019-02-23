@@ -28,7 +28,7 @@ int main()
     bar->set_name("ha");
     bar->set_value(0xcafe);
 
-    ofstream out("data.bin");
+    ofstream out("dataxx.bin");
     if (foo.SerializeToOstream(&out))
         cout << "len: " << out.tellp() << endl;
     out.close();

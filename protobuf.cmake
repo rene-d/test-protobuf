@@ -1,29 +1,30 @@
 # protobuf.cmake
 # rene-d 02/2019
 
+# replacement for
+#   find_package(Protobuf REQUIRED)
+
 
 #   GIT_REPOSITORY https://github.com/protocolbuffers/protobuf
 #   GIT_TAG v3.0.0
 
-set(URL https://github.com/protocolbuffers/protobuf/releases/download/v3.0.0/protobuf-cpp-3.0.0.tar.gz)
+# set(URL https://github.com/protocolbuffers/protobuf/releases/download/v3.0.0/protobuf-cpp-3.0.0.tar.gz)
+set(URL https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protobuf-cpp-3.6.1.tar.gz)
 
 
 ExternalProject_Add(
   protobuf-external
   PREFIX ${CMAKE_CURRENT_BINARY_DIR}/protobuf
-
   URL ${URL}
-
   CMAKE_CACHE_ARGS
     "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
     "-DCMAKE_CXX_COMPILER:STRING=${CMAKE_CXX_COMPILER}"
+    "-DCMAKE_CXX_STANDARD:STRING=14"
     "-DCMAKE_INSTALL_PREFIX:FILEPATH=${CMAKE_CURRENT_BINARY_DIR}/externals"
     "-Dprotobuf_BUILD_TESTS:BOOL=OFF"
     "-Dprotobuf_BUILD_EXAMPLES:BOOL=OFF"
     "-Dprotobuf_WITH_ZLIB:BOOL=ON"
-
   SOURCE_SUBDIR cmake
-
 #  LOG_CONFIGURE 1
 #  BUILD_ALWAYS 1
 #  STEP_TARGETS build
@@ -34,18 +35,12 @@ ExternalProject_Add(
 cmake_policy(SET CMP0074 NEW)
 set(Protobuf_ROOT ${CMAKE_CURRENT_BINARY_DIR}/externals)
 
-# find_package(Protobuf REQUIRED)
-
-#
-#
-set(external ${CMAKE_CURRENT_BINARY_DIR}/externals)
-
-set(Protobuf_INCLUDE_DIR ${external}/include)
-set(Protobuf_INCLUDE_DIRS ${external}/include)
-set(Protobuf_PROTOC_EXECUTABLE ${external}/bin/protoc)
-set(Protobuf_LIBRARY ${external}/lib/libprotobuf.a)
-set(Protobuf_LITE_LIBRARY ${external}/lib/libprotobuf-lite.a)
-set(Protobuf_PROTOC_LIBRARY ${external}/lib/libprotoc.a)
+set(Protobuf_INCLUDE_DIR ${Protobuf_ROOT}/include)
+set(Protobuf_INCLUDE_DIRS ${Protobuf_ROOT}/include)
+set(Protobuf_PROTOC_EXECUTABLE ${Protobuf_ROOT}/bin/protoc)
+set(Protobuf_LIBRARY ${Protobuf_ROOT}/lib/libprotobuf.a)
+set(Protobuf_LITE_LIBRARY ${Protobuf_ROOT}/lib/libprotobuf-lite.a)
+set(Protobuf_PROTOC_LIBRARY ${Protobuf_ROOT}/lib/libprotoc.a)
 
 message(STATUS "Protobuf_INCLUDE_DIRS = ${Protobuf_INCLUDE_DIRS}")
 message(STATUS "Protobuf_LIBRARY = ${Protobuf_LIBRARY}")

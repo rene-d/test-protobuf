@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     foo->n_bar = rand() % 10;
     foo->bar = (Foo__Bar **)calloc(foo->n_bar, sizeof(Foo__Bar *));
 
-    printf("   bar: %d\n", foo->n_bar);
+    printf("   bar: %zu\n", foo->n_bar);
 
     for (int i = 0; i < foo->n_bar; ++i)
     {
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         bar->n_beer = rand() % 10;
         bar->beer = (Foo__Bar__Beer **)calloc(bar->n_beer, sizeof(Foo__Bar__Beer *));
 
-        printf("      beer: %d\n", bar->n_beer);
+        printf("      beer: %zu\n", bar->n_beer);
 
         for (int j = 0; j < bar->n_beer; ++j)
         {

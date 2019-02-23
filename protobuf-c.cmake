@@ -1,18 +1,23 @@
+# protobufc.cmake
+# rene-d 02/2019
+
+
 # GIT_REPOSITORY https://github.com/protobuf-c/protobuf-c
 # GIT_TAG v1.2.1
 
-set(URL https://github.com/protobuf-c/protobuf-c/releases/download/v1.2.1/protobuf-c-1.2.1.tar.gz)
+# set(URL https://github.com/protobuf-c/protobuf-c/releases/download/v1.2.1/protobuf-c-1.2.1.tar.gz)
+set(URL https://github.com/protobuf-c/protobuf-c/releases/download/v1.3.1/protobuf-c-1.3.1.tar.gz)
+
 
 ExternalProject_Add(
   protobuf-c-external
   PREFIX ${CMAKE_CURRENT_BINARY_DIR}/protobuf-c
-
   URL ${URL}
-
   CMAKE_CACHE_ARGS
     "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
     "-DCMAKE_C_COMPILER:STRING=${CMAKE_C_COMPILER}"
     "-DCMAKE_CXX_COMPILER:STRING=${CMAKE_CXX_COMPILER}"
+    "-DCMAKE_CXX_STANDARD:STRING=14"
     "-DCMAKE_INSTALL_PREFIX:FILEPATH=${CMAKE_CURRENT_BINARY_DIR}/externals"
     "-DCMAKE_POLICY_DEFAULT_CMP0074:STRING=NEW"
     "-DProtobuf_ROOT:FILEPATH=${CMAKE_CURRENT_BINARY_DIR}/externals"
@@ -27,14 +32,6 @@ add_dependencies(protobuf-c-external protobuf-external)
 
 set(ProtobufC_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/externals/include)
 set(ProtobufC_LIBRARY ${CMAKE_CURRENT_BINARY_DIR}/externals/lib/libprotobuf-c.a)
-
-#
-# find_program(ProtobufC_PROTOC-C_EXECUTABLE
-#     NAMES protoc-c
-#     DOC "The Google Protocol Buffers Compiler C"
-#     PATHS
-#     ${CMAKE_CURRENT_BINARY_DIR}/externals/bin
-# )
 set(ProtobufC_PROTOC-C_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/externals/bin/protoc-c)
 mark_as_advanced(ProtobufC_PROTOC-C_EXECUTABLE)
 
