@@ -1,9 +1,10 @@
 //
-// zmq example
+// zmq example : SUB
 //
 
 #include <assert.h>
 #include <stdio.h>
+#include <string.h>
 #include <zmq.h>
 
 int main()
@@ -16,8 +17,9 @@ int main()
     zmq_bind(sink, "tcp://*:4567");
     zmq_setsockopt(sink, ZMQ_SUBSCRIBE, "TOPIC", 5);
 
-    //  Process tasks forever
-    while (1)
+    //  Process tasks until we receive a BYE
+    bool stop = false;
+    while (!stop)
     {
         int more;
         int num_part = 0;
@@ -39,6 +41,9 @@ int main()
             printf("  part %d: ", num_part);
             fwrite(zmq_msg_data(&part), zmq_msg_size(&part), 1, stdout);
 
+            if (num_part == 2 && zmq_msg_size(&part) == 3 && memcmp(zmq_msg_data(&part), "BYE", 3) == 0)
+                stop = true;
+
             // Look if there is another part to come
             more = zmq_msg_more(&part);
             zmq_msg_close(&part);
@@ -50,5 +55,6 @@ int main()
 
     zmq_close(sink);
     zmq_ctx_destroy(context);
+
     return 0;
 }

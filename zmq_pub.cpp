@@ -1,5 +1,5 @@
 //
-// zmq example
+// zmq example: PUB with socket monitoring
 //
 
 #include <assert.h>
@@ -36,8 +36,7 @@ void send(void *socket, const char *text)
     zmq_msg_close(&part);
 }
 
-static int
-get_monitor_event(void *monitor, int *value, char **address)
+int get_monitor_event(void *monitor, int *value, char **address)
 {
     // First frame in message contains event number and value
     zmq_msg_t msg;
@@ -68,7 +67,7 @@ get_monitor_event(void *monitor, int *value, char **address)
     return event;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     int rc;
     void *context = zmq_ctx_new();
@@ -119,10 +118,13 @@ int main()
 
         // send a message, will not be lost
         send(socket, "got it? 🤪");
+
+        send(socket, "BYE");
     }
 
     zmq_close(client_mon);
     zmq_close(socket);
     zmq_ctx_destroy(context);
+
     return 0;
 }
